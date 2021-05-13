@@ -47,9 +47,9 @@ By default, the blacklist file will be stored at
 
 _Example on how to use:_
 
-Create in your host 
-To start ics-filter, will be served inside with Gunicorn and exposed by the
-port 8000:
+Create in your host /opt/ics\_filter which will be used to make the blacklist
+persistent. To start ics-filter, will be served inside with Gunicorn and
+exposed by the port 8000:
 
 ```
 docker run -d --name ics-filter \
