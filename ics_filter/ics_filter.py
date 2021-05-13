@@ -107,6 +107,8 @@ def blacklist_manage(calendar: Calendar, blacklist: Blacklist):
 
     Add/Remove blacklisted events
     """
+    print("Loading events name, this can takes few seconds...")
+    calendar.fetch()
     events_name = {event.name for event in calendar.calendar.events}
     all_events = events_name.union(set(blacklist.blacklist))
     questions = [
@@ -190,7 +192,7 @@ def create_app():
 def main():
     # (function, do_we_load_calendar)
     actions = {
-        'manage-blacklist': (blacklist_manage, True),
+        'manage-blacklist': (blacklist_manage, False),
         'get-filtered': (get_filtered_calendar, True),
         'serve': (serve, False),
     }
@@ -210,12 +212,14 @@ def main():
     url = args.source_ics
 
     if not url:
-        print("You should specify --url if environment variable "
+        print("You should specify --source-ics if environment variable "
               "SOURCE_ICS is not spectified")
+        return
 
     if not args.blacklist_file:
         print("You should specify --blacklist-file if environment variable "
               "ICS_BLACKLIST_FILE is not spectified")
+        return
 
     action, do_we_load_calendar = actions[args.command]
 
