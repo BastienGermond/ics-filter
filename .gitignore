@@ -1,3 +1,6 @@
 tags
 
 .venv
+.vim
+
+__pycache__
