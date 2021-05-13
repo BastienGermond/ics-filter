@@ -177,7 +177,6 @@ def create_app():
         try:
             calendar.fetch()
             filtered = calendar.filter(blacklist)
-            print(str(filtered))
             response = str(filtered)
         except CalendarException:
             status = '500 Internal Server Error'
@@ -200,15 +199,23 @@ def main():
     parser.add_argument('command', choices=list(actions.keys()))
     parser.add_argument('--source-ics',
                         help="Source ics that will be filtered",
-                        required=True
+                        default=os.getenv("SOURCE_ICS")
                         )
     parser.add_argument('--blacklist-file',
                         help="filepath to blacklist",
-                        required=True
+                        default=os.getenv("ICS_BLACKLIST_FILE")
                         )
 
     args = parser.parse_args()
     url = args.source_ics
+
+    if not url:
+        print("You should specify --url if environment variable "
+              "SOURCE_ICS is not spectified")
+
+    if not args.blacklist_file:
+        print("You should specify --blacklist-file if environment variable "
+              "ICS_BLACKLIST_FILE is not spectified")
 
     action, do_we_load_calendar = actions[args.command]
 
