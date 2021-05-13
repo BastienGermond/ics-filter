@@ -59,13 +59,17 @@ docker run -d --name ics-filter \
     synapzee/ics-filter
 ```
 
+**Note**: Please avoid binding it to 0.0.0.0, but prefer something like `-p
+127.0.0.1:8000:8000`.
+
 Add or remove events in blacklist:
 
 ```
-docker run -it ics-filter \
+docker run -it \
     -v /opt/ics_filter:/opt/ics_filter \
-    -e SOURCE_ICS='<your_ics_source>' \
-    synapzee/ics-filter
+    -e 'SOURCE_ICS=<your_ics_source>' \
+    synapzee/ics-filter \
+    ics-filter manage-blacklist
 ```
 
 **Note**: You must restart your docker instance for changes to take effects.
