@@ -164,7 +164,7 @@ def create_app():
     blacklist = Blacklist(Path(blacklist_file))
 
     url = os.getenv("SOURCE_ICS")
-    calendar = Calendar(url)
+    calendar = Calendar(url, cache_period=timedelta(minutes=15))
 
     def wsgi(env, start_response):
         env = env  # make linter happy
